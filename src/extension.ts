@@ -60,18 +60,23 @@ export function activate(context: vscode.ExtensionContext) {
       var endPos = activeEditor.document.positionAt(
         startIndex + match.match.length
       );
-      let accumulatedText = text.slice(0, startIndex + match.match.length);
+      let accumulatedText = text
+        .slice(0, startIndex + match.match.length)
+        .replace(/\n/gm, ` `);
       output.appendLine(accumulatedText);
-      const score = rs.textStandard(match.match, true);
+      const score = rs.fleschKincaidGrade(match.match, true);
       output.appendLine(`sentence score: ${score}`);
-      const movingScore = rs.textStandard(accumulatedText, true);
+      const movingScore = rs.fleschKincaidGrade(accumulatedText, true);
       output.appendLine(`accumulated score: ${movingScore}`);
       let decoration = vscode.window.createTextEditorDecorationType({
         color: colorFromScore(movingScore),
       });
       decorators.push(decoration);
       activeEditor.setDecorations(decoration, [
-        new vscode.Range(startPos, endPos),
+        {
+          range: new vscode.Range(startPos, endPos),
+          hoverMessage: `sentence score: ${score}, accumulated score:  ${movingScore}`,
+        },
       ]);
     });
   }
