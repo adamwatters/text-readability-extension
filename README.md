@@ -8,4 +8,4 @@ Text colors are assigned from a green to red gradient, with green corresponding 
 
 Demo: https://drive.google.com/file/d/1gQYfyrErZwkfzIfsUbo60rTbJiPdSPmV/view?usp=sharing
 
-Run: F5 to launch the Extension Development host.
+Run: `npm install`, `F5` to launch the Extension Development host.
